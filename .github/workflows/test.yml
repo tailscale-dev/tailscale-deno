@@ -1,0 +1,25 @@
+name: Test Deno Module
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone code
+        uses: actions/checkout@v3
+      - name: Set up Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+      - name: Lint Deno Module
+        run: deno fmt --check
+      - name: Build Deno Module
+        run: deno run --reload mod.ts
+      - name: Test Deno Module
+        run: deno test --allow-none
